@@ -23,7 +23,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public ArrayList<Usuario> getAllOrderByTiradas() {
-		return usuarioDAO.getAllOrderByTiradas();
+		ArrayList<Usuario> us= usuarioDAO.getAllOrderByTiradas();
+		for (Usuario u : us) {
+			ArrayList<Dado> ds= dadoDAO.getAllByUserId(u.getId());
+			u.setTiradas(ds);
+			u.setNumTiradas(ds.size());
+		}
+		return us;
 	}
 
 	@Override
