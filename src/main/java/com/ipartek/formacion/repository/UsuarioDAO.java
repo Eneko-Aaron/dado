@@ -23,4 +23,8 @@ public interface UsuarioDAO {
 	boolean delete ( int id );
 	
 	int count();
+	
+	boolean darDeAlta(int id);
+	
+	boolean darDeBaja(int id);
 }

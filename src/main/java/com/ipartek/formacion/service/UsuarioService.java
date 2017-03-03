@@ -18,9 +18,9 @@ public interface UsuarioService {
 	
 	boolean delete ( int id );
 	
-	boolean darDeAlta(Usuario u);
+	boolean darDeAlta(int id);
 	
-	boolean darDeBaja(Usuario u);
+	boolean darDeBaja(int id);
 	
 	int count();
 	

@@ -1,11 +1,18 @@
 package com.ipartek.formacion.repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.ipartek.formacion.domain.Usuario;
@@ -53,21 +60,47 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	}
 
 	@Override
-	public boolean add(Usuario u) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean add(final Usuario u) {
+		boolean insertado = false;
+		int lineasInsertadas= 0;
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		lineasInsertadas= this.jdbctemplate.update(
+		    new PreparedStatementCreator() {		    	
+		        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+		            PreparedStatement ps = connection.prepareStatement("INSERT INTO `usuario` (`nombre`) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
+		            ps.setString(1, u.getNombre());
+		            return ps;
+		        }
+		    },
+		    keyHolder);
+		if (lineasInsertadas!=0) {
+			insertado=true;
+			u.setId(keyHolder.getKey().intValue());
+		}
+		
+		return insertado;
 	}
 
 	@Override
 	public boolean update(Usuario u) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean modificado = false;
+		int lineasModificadas = 0;
+			lineasModificadas = this.jdbctemplate.update("UPDATE `usuario` SET `nombre`= ?", u.getNombre());
+			if (lineasModificadas != 0) {
+				modificado = true;
+			}
+		return modificado;
 	}
 
 	@Override
 	public boolean delete(int id) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean borrado = false;
+		int lineasBorradas = 0;
+		lineasBorradas = this.jdbctemplate.update("DELETE FROM `usuario` WHERE `id`= ? ;", id);
+		if (lineasBorradas!=0) {
+			borrado= true;
+		}
+		return borrado;
 	}
 
 	@Override
@@ -76,6 +109,32 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 					"SELECT COUNT(`id`) as 'total' FROM `usuario`");
 			
 		return c;
+	}
+
+	@Override
+	public boolean darDeAlta(int id) {
+		boolean modificado = false;
+		int lineasModificadas = 0;
+			lineasModificadas = this.jdbctemplate.update(
+					"UPDATE `usuario` SET `fecha_alta`= CURRENT_TIMESTAMP, `fecha_baja`=NULL WHERE `id`= ? ;",
+					id);
+			if (lineasModificadas != 0) {
+				modificado = true;
+			}
+		return modificado;
+	}
+
+	@Override
+	public boolean darDeBaja(int id) {
+		boolean modificado = false;
+		int lineasModificadas = 0;
+			lineasModificadas = this.jdbctemplate.update(
+					"UPDATE `usuario` SET `fecha_baja`= CURRENT_TIMESTAMP, `fecha_alta`=NULL WHERE `id`= ? ;",
+					id);
+			if (lineasModificadas != 0) {
+				modificado = true;
+			}
+		return modificado;
 	}
 	
 }

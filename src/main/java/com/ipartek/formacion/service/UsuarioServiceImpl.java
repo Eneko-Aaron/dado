@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ipartek.formacion.domain.Dado;
 import com.ipartek.formacion.domain.Usuario;
 import com.ipartek.formacion.repository.DadoDAO;
 import com.ipartek.formacion.repository.UsuarioDAO;
@@ -28,38 +29,35 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public Usuario getById(int id) {
 		Usuario u = usuarioDAO.getById(id);
-		u.setTiradas(dadoDAO.getAllByUserId(id));
+		ArrayList<Dado> tiradas= dadoDAO.getAllByUserId(id);
+		u.setTiradas(tiradas);
+		u.setNumTiradas(tiradas.size());
 		return u;
 	}
 
 	@Override
 	public boolean add(Usuario u) {
-		// TODO Auto-generated method stub
-		return false;
+		return usuarioDAO.add(u);
 	}
 
 	@Override
 	public boolean update(Usuario u) {
-		// TODO Auto-generated method stub
-		return false;
+		return usuarioDAO.update(u);
 	}
 
 	@Override
 	public boolean delete(int id) {
-		// TODO Auto-generated method stub
-		return false;
+		return usuarioDAO.delete(id);
 	}
 
 	@Override
-	public boolean darDeAlta(Usuario u) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean darDeAlta(int id) {
+		return usuarioDAO.darDeAlta(id);
 	}
 
 	@Override
-	public boolean darDeBaja(Usuario u) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean darDeBaja(int id) {
+		return usuarioDAO.darDeBaja(id);
 	}
 
 	@Override
