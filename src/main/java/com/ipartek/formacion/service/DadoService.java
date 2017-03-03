@@ -1,21 +1,15 @@
-package com.ipartek.formacion.repository;
+package com.ipartek.formacion.service;
 
 import java.util.ArrayList;
-
-import javax.sql.DataSource;
 
 import com.ipartek.formacion.domain.Dado;
 import com.ipartek.formacion.domain.Historial;
 
-public interface DadoDAO {
-	
-	void setDataSource(DataSource dataSource);
-	
+public interface DadoService {
 	ArrayList<Historial> getHistorial();
 	
 	ArrayList<Dado> getAllByUserId(int idUsuario);
 	
 	boolean addTirada( int idUsuario);
-	
-	
+
 }

@@ -30,9 +30,9 @@ public class DadoDAOImpl implements DadoDAO {
 	}
 	
 	@Override
-	public ArrayList<Historial> getAll() {
+	public ArrayList<Historial> getHistorial() {
 		ArrayList<Historial> hs= (ArrayList<Historial>) this.jdbctemplate.query(
-				"SELECT u.nombre, t.fecha FROM usuario as u, tirada as t WHERE u.id=t.id_usuario ORDER BY fecha;", 
+				"SELECT u.id, u.nombre, t.fecha FROM tirada as t, usuario as u ORDER BY t.fecha;", 
 				new HistorialMapper());
 		return hs;
 	}
@@ -40,7 +40,7 @@ public class DadoDAOImpl implements DadoDAO {
 	@Override
 	public ArrayList<Dado> getAllByUserId(int idUsuario) {
 		ArrayList<Dado> ds= (ArrayList<Dado>) this.jdbctemplate.query(
-				"SELECT `id`, `fecha` FROM `tirada` WHERE `id_usuario`= ?", 
+				"SELECT `id`, `id_usuario`, `fecha` FROM `tirada` WHERE `id_usuario`= ?", 
 				new Object[]{idUsuario},
 				new DadoMapper());
 		return ds;

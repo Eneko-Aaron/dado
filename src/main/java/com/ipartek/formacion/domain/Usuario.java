@@ -87,14 +87,17 @@ public class Usuario {
 	public void setNumTiradas(int numTiradas) {
 		this.numTiradas = numTiradas;
 	}
-
+	
 	//toString
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", fecha_alta=" + fecha_alta + ", fecha_baja=" + fecha_baja
-				+ ", fecha_modificacion=" + fecha_modificacion + ", tiradas=" + tiradas + "]";
+				+ ", fecha_modificacion=" + fecha_modificacion + ", tiradas=" + tiradas + ", numTiradas=" + numTiradas
+				+ "]";
 	}
 
+	
+	
 	
 
 	

@@ -15,6 +15,7 @@ public class HistorialMapper implements RowMapper<Historial> {
 		Historial h = new Historial();
 		Usuario u = new  Usuario();
 		u.setNombre(rs.getString("nombre"));
+		u.setId(rs.getInt("id"));
 		h.setU(u);
 		h.setFecha(rs.getTimestamp("fecha"));
 		return h;

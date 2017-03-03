@@ -72,15 +72,10 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	@Override
 	public int count() {
-		int contador = 0;
-		try{
-			contador=this.jdbctemplate.queryForInt(
+		int	c=this.jdbctemplate.queryForInt(
 					"SELECT COUNT(`id`) as 'total' FROM `usuario`");
 			
-		}catch(Exception e){
-			
-		}
-		return contador;
+		return c;
 	}
 	
 }

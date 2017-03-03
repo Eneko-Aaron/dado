@@ -13,6 +13,7 @@ public class DadoMapper implements RowMapper<Dado> {
 	public Dado mapRow(ResultSet rs, int rowNum) throws SQLException {
 		Dado d = new Dado();
 		d.setId(rs.getInt("id"));
+		d.setNumero(rs.getInt("id_usuario"));
 		d.setFecha(rs.getTimestamp("fecha"));
 		return d;
 	}
