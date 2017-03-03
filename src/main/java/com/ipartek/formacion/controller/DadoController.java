@@ -17,7 +17,6 @@ public class DadoController {
 	
 	@Autowired
 	private UsuarioService usuarioService;
-	
 	@Autowired
 	private DadoService dadoService;
 	
@@ -25,7 +24,6 @@ public class DadoController {
 	public String home(Locale locale, Model model) {
 		
 		model.addAttribute("ranking", usuarioService.getAllOrderByTiradas());
-		model.addAttribute("historial", dadoService.getHistorial());
 		return "home";
 	}
 	
@@ -41,8 +39,21 @@ public class DadoController {
 		u = usuarioService.getById(d.getNumero());
 		
 		model.addAttribute("usuario", u);
-		model.addAttribute("historial", dadoService.getHistorial());
 		model.addAttribute("ranking", usuarioService.getAllOrderByTiradas());
 		return "home";
+	}
+	
+	@RequestMapping(value = "/estadisticas", method = RequestMethod.GET)
+	public String estadisticas(Model model) {
+		
+		model.addAttribute("historial", dadoService.getHistorial());
+		return "estadisticas";
+	}
+	
+	@RequestMapping(value = "/admin/gestion", method = RequestMethod.GET)
+	public String gestion(Model model) {
+		
+		model.addAttribute("usuarios", usuarioService.getAll());
+		return "estadisticas";
 	}
 }
