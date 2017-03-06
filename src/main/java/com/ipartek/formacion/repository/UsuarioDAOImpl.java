@@ -38,7 +38,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	@Override()
 	public List<Usuario> getAll() {
 		ArrayList<Usuario> usuarios = (ArrayList<Usuario>) this.jdbctemplate.query(
-				"SELECT `id`, `nombre` FROM usuario WHERE `fecha_baja` IS NULL ORDER BY `id` DESC;",
+				"SELECT `id`,  `nombre`, `fecha_alta`, `fecha_baja`, `fecha_modificacion` FROM usuario ORDER BY `id` DESC;",
 				new UsuarioMapper());
 		return usuarios;
 	}
@@ -53,7 +53,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	@Override()
 	public Usuario getById(int idUsuario) {
-		Usuario usuario = this.jdbctemplate.queryForObject("SELECT `id`, `nombre` FROM usuario WHERE `id`= ?",
+		Usuario usuario = this.jdbctemplate.queryForObject("SELECT `id`, `nombre`, `fecha_alta`, `fecha_baja`, `fecha_modificacion` FROM usuario WHERE `id`= ?",
 				new Object[] { idUsuario }, new UsuarioMapper());
 		return usuario;
 	}
@@ -64,6 +64,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		int lineasInsertadas = 0;
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		lineasInsertadas = this.jdbctemplate.update(new PreparedStatementCreator() {
+			@Override
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				PreparedStatement prepared = connection.prepareStatement("INSERT INTO `usuario` (`nombre`) VALUES (?)",
 						Statement.RETURN_GENERATED_KEYS);
@@ -83,7 +84,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	public boolean update(Usuario usuario) {
 		boolean modificado = false;
 		int lineasModificadas = 0;
-		lineasModificadas = this.jdbctemplate.update("UPDATE `usuario` SET `nombre`= ?", usuario.getNombre());
+		lineasModificadas = this.jdbctemplate.update("UPDATE `usuario` SET `nombre`= ? WHERE `id`= ?", usuario.getNombre(), usuario.getId());
 		if (lineasModificadas != 0) {
 			modificado = true;
 		}

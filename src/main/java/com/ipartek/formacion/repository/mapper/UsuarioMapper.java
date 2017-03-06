@@ -14,6 +14,9 @@ public class UsuarioMapper implements RowMapper<Usuario> {
 		Usuario usuario = new Usuario();
 		usuario.setId(resulSet.getInt("id"));
 		usuario.setNombre(resulSet.getString("nombre"));
+		usuario.setFechaAlta(resulSet.getTimestamp("fecha_alta"));
+		usuario.setFechaBaja(resulSet.getTimestamp("fecha_baja"));
+		usuario.setFechaModificacion(resulSet.getTimestamp("fecha_modificacion"));
 		return usuario;
 	}
 
