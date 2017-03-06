@@ -47,13 +47,7 @@ public class DadoController {
 	public String estadisticas(Model model) {
 		
 		model.addAttribute("historial", dadoService.getHistorial());
-		return "estadisticas";
+		return "estadisticas/index";
 	}
 	
-	@RequestMapping(value = "/admin/gestion", method = RequestMethod.GET)
-	public String gestion(Model model) {
-		
-		model.addAttribute("usuarios", usuarioService.getAll());
-		return "estadisticas";
-	}
 }

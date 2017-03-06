@@ -42,34 +42,28 @@ public class Usuario {
 		this.nombre = nombre;
 	}
 
-
-	public Date getFecha_alta() {
+	public Date getFechaAlta() {
 		return fechaAlta;
 	}
 
-
-	public void setFecha_alta(Date fecha_alta) {
-		this.fechaAlta = fecha_alta;
+	public void setFechaAlta(Date fechaAlta) {
+		this.fechaAlta = fechaAlta;
 	}
 
-
-	public Date getFecha_baja() {
+	public Date getFechaBaja() {
 		return fechaBaja;
 	}
 
-
-	public void setFecha_baja(Date fecha_baja) {
-		this.fechaBaja = fecha_baja;
+	public void setFechaBaja(Date fechaBaja) {
+		this.fechaBaja = fechaBaja;
 	}
 
-
-	public Date getFecha_modificacion() {
+	public Date getFechaModificacion() {
 		return fechaModificacion;
 	}
 
-
-	public void setFecha_modificacion(Date fecha_modificacion) {
-		this.fechaModificacion = fecha_modificacion;
+	public void setFechaModificacion(Date fechaModificacion) {
+		this.fechaModificacion = fechaModificacion;
 	}
 
 	public ArrayList<Dado> getTiradas() {

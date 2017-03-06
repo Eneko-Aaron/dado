@@ -15,7 +15,15 @@ public interface DadoDAO {
 	
 	ArrayList<Dado> getAllByUserId(int idUsuario);
 	
+	ArrayList<Dado> getLastByUserId(int idUsuario);
+	
 	boolean addTirada( int idUsuario);
+	
+	int countById(int idUsuario);
+	
+	int countAll();
+	
+	
 	
 	
 }

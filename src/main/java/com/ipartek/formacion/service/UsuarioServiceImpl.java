@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ipartek.formacion.domain.Dado;
 import com.ipartek.formacion.domain.Usuario;
 import com.ipartek.formacion.repository.DadoDAO;
 import com.ipartek.formacion.repository.UsuarioDAO;
@@ -13,8 +12,8 @@ import com.ipartek.formacion.repository.UsuarioDAO;
 @Service("usuarioService")
 public class UsuarioServiceImpl implements UsuarioService {
 	
-	@Autowired UsuarioDAO usuarioDAO;
-	@Autowired DadoDAO dadoDAO;
+	@Autowired private UsuarioDAO usuarioDAO;
+	@Autowired private DadoDAO dadoDAO;
 
 	@Override
 	public ArrayList<Usuario> getAll() {		
@@ -25,9 +24,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public ArrayList<Usuario> getAllOrderByTiradas() {
 		ArrayList<Usuario> us= usuarioDAO.getAllOrderByTiradas();
 		for (Usuario u : us) {
-			ArrayList<Dado> ds= dadoDAO.getAllByUserId(u.getId());
-			u.setTiradas(ds);
-			u.setNumTiradas(ds.size());
+			u.setTiradas(dadoDAO.getLastByUserId(u.getId()));
+			u.setNumTiradas(dadoDAO.countById(u.getId()));
 		}
 		return us;
 	}
@@ -35,9 +33,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public Usuario getById(int id) {
 		Usuario u = usuarioDAO.getById(id);
-		ArrayList<Dado> tiradas= dadoDAO.getAllByUserId(id);
-		u.setTiradas(tiradas);
-		u.setNumTiradas(tiradas.size());
 		return u;
 	}
 

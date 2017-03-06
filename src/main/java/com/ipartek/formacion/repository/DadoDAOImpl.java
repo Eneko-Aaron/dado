@@ -45,6 +45,15 @@ public class DadoDAOImpl implements DadoDAO {
 				new DadoMapper());
 		return ds;
 	}
+	
+	@Override
+	public ArrayList<Dado> getLastByUserId(int idUsuario) {
+			ArrayList<Dado> ds= (ArrayList<Dado>) this.jdbctemplate.query(
+					"SELECT `id`, `id_usuario`, `fecha` FROM `tirada` WHERE `id_usuario`= ? LIMIT 1;", 
+					new Object[]{idUsuario},
+					new DadoMapper());
+			return ds;
+	}
 
 	@Override
 	public boolean addTirada(int idUsuario) {
@@ -53,6 +62,24 @@ public class DadoDAOImpl implements DadoDAO {
 				"INSERT INTO `tirada` (`id_usuario` ) values ( ? );", idUsuario);
 		return (lineasInsertadas!=0)? true: false;
 	}
+
+	@Override
+	public int countAll() {
+		int	c=this.jdbctemplate.queryForInt(
+				"SELECT COUNT(`id`) as 'total' FROM `tirada`");
+		
+	return c;
+	}
+
+	@Override
+	public int countById(int idUsuario) {
+		int	c=this.jdbctemplate.queryForInt(
+				"SELECT COUNT(`id_usuario`) as 'total' FROM `usuario`",idUsuario);
+		
+	return c;
+	}
+
+	
 		
 
 	

@@ -3,8 +3,8 @@ package com.ipartek.formacion.domain;
 import java.util.Date;
 
 public class Historial {
-	Usuario u;
-	Date fecha;
+	private Usuario u;
+	private Date fecha;
 	public Historial() {
 		super();
 	}
@@ -22,7 +22,7 @@ public class Historial {
 	}
 	@Override
 	public String toString() {
-		return "Historial [u=" + u + ", fecha=" + fecha + "]";
+		return "Historial [u=" + u.getNombre() + ", fecha=" + fecha + "]";
 	}
 	
 
