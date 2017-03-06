@@ -20,11 +20,11 @@ import com.ipartek.formacion.domain.Usuario;
 import com.ipartek.formacion.repository.mapper.UsuarioConTiradasMapper;
 import com.ipartek.formacion.repository.mapper.UsuarioMapper;
 
-@Repository(value="usuarioDAO")
+@Repository(value = "usuarioDAO")
 public class UsuarioDAOImpl implements UsuarioDAO {
 
 	@Autowired()
-	private DataSource dataSource;	
+	private DataSource dataSource;
 	private JdbcTemplate jdbctemplate;
 
 	@Autowired()
@@ -37,48 +37,45 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	@Override()
 	public List<Usuario> getAll() {
-		ArrayList<Usuario> usuarios= (ArrayList<Usuario>) this.jdbctemplate.query(
-				"SELECT `id`, `nombre` FROM usuario WHERE `fecha_baja` IS NOT NULL ORDER BY `id` DESC;", 
+		ArrayList<Usuario> usuarios = (ArrayList<Usuario>) this.jdbctemplate.query(
+				"SELECT `id`, `nombre` FROM usuario WHERE `fecha_baja` IS NULL ORDER BY `id` DESC;",
 				new UsuarioMapper());
 		return usuarios;
 	}
 
 	@Override()
 	public List<Usuario> getAllOrderByTiradas() {
-		ArrayList<Usuario> usuarios= (ArrayList<Usuario>) this.jdbctemplate.query(
-				"SELECT u.id, u.nombre , count(u.id) as total FROM usuario as u, tirada as t WHERE u.id = t.id_usuario AND `fecha_baja` IS NOT NULL GROUP BY u.id ORDER BY total DESC;",
+		ArrayList<Usuario> usuarios = (ArrayList<Usuario>) this.jdbctemplate.query(
+				"SELECT u.id, u.nombre , count(u.id) as total FROM usuario as u, tirada as t WHERE u.id = t.id_usuario AND `fecha_baja` IS NULL GROUP BY u.id ORDER BY total DESC;",
 				new UsuarioConTiradasMapper());
 		return usuarios;
 	}
 
 	@Override()
 	public Usuario getById(int idUsuario) {
-		Usuario usuario = this.jdbctemplate.queryForObject(
-				"SELECT `id`, `nombre` FROM usuario WHERE `id`= ?",
-				new Object[]{idUsuario}, 
-				new UsuarioMapper());
+		Usuario usuario = this.jdbctemplate.queryForObject("SELECT `id`, `nombre` FROM usuario WHERE `id`= ?",
+				new Object[] { idUsuario }, new UsuarioMapper());
 		return usuario;
 	}
 
 	@Override()
 	public boolean add(final Usuario usuario) {
 		boolean insertado = false;
-		int lineasInsertadas= 0;
+		int lineasInsertadas = 0;
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		lineasInsertadas= this.jdbctemplate.update(
-		    new PreparedStatementCreator() {		    	
-		        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-		            PreparedStatement prepared = connection.prepareStatement("INSERT INTO `usuario` (`nombre`) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
-		            prepared.setString(1, usuario.getNombre());
-		            return prepared;
-		        }
-		    },
-		    keyHolder);
-		if (lineasInsertadas!=0) {
-			insertado=true;
+		lineasInsertadas = this.jdbctemplate.update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement prepared = connection.prepareStatement("INSERT INTO `usuario` (`nombre`) VALUES (?)",
+						Statement.RETURN_GENERATED_KEYS);
+				prepared.setString(1, usuario.getNombre());
+				return prepared;
+			}
+		}, keyHolder);
+		if (lineasInsertadas != 0) {
+			insertado = true;
 			usuario.setId(keyHolder.getKey().intValue());
 		}
-		
+
 		return insertado;
 	}
 
@@ -86,10 +83,10 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	public boolean update(Usuario usuario) {
 		boolean modificado = false;
 		int lineasModificadas = 0;
-			lineasModificadas = this.jdbctemplate.update("UPDATE `usuario` SET `nombre`= ?", usuario.getNombre());
-			if (lineasModificadas != 0) {
-				modificado = true;
-			}
+		lineasModificadas = this.jdbctemplate.update("UPDATE `usuario` SET `nombre`= ?", usuario.getNombre());
+		if (lineasModificadas != 0) {
+			modificado = true;
+		}
 		return modificado;
 	}
 
@@ -98,17 +95,16 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		boolean borrado = false;
 		int lineasBorradas = 0;
 		lineasBorradas = this.jdbctemplate.update("DELETE FROM `usuario` WHERE `id`= ? ;", idUsuario);
-		if (lineasBorradas!=0) {
-			borrado= true;
+		if (lineasBorradas != 0) {
+			borrado = true;
 		}
 		return borrado;
 	}
 
 	@Override()
 	public int count() {
-		int	contador=this.jdbctemplate.queryForInt(
-					"SELECT COUNT(`id`) as 'total' FROM `usuario`");
-			
+		int contador = this.jdbctemplate.queryForInt("SELECT COUNT(`id`) as 'total' FROM `usuario`");
+
 		return contador;
 	}
 
@@ -116,12 +112,11 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	public boolean darDeAlta(int idUsuario) {
 		boolean modificado = false;
 		int lineasModificadas = 0;
-			lineasModificadas = this.jdbctemplate.update(
-					"UPDATE `usuario` SET `fecha_alta`= CURRENT_TIMESTAMP, `fecha_baja`=NULL WHERE `id`= ? ;",
-					idUsuario);
-			if (lineasModificadas != 0) {
-				modificado = true;
-			}
+		lineasModificadas = this.jdbctemplate.update(
+				"UPDATE `usuario` SET `fecha_alta`= CURRENT_TIMESTAMP, `fecha_baja`=NULL WHERE `id`= ? ;", idUsuario);
+		if (lineasModificadas != 0) {
+			modificado = true;
+		}
 		return modificado;
 	}
 
@@ -129,13 +124,12 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	public boolean darDeBaja(int idUsuario) {
 		boolean modificado = false;
 		int lineasModificadas = 0;
-			lineasModificadas = this.jdbctemplate.update(
-					"UPDATE `usuario` SET `fecha_baja`= CURRENT_TIMESTAMP WHERE `id`= ? ;",
-					idUsuario);
-			if (lineasModificadas != 0) {
-				modificado = true;
-			}
+		lineasModificadas = this.jdbctemplate
+				.update("UPDATE `usuario` SET `fecha_baja`= CURRENT_TIMESTAMP WHERE `id`= ? ;", idUsuario);
+		if (lineasModificadas != 0) {
+			modificado = true;
+		}
 		return modificado;
 	}
-	
+
 }

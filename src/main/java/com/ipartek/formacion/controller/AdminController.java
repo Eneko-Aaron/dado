@@ -12,31 +12,44 @@ import com.ipartek.formacion.service.UsuarioService;
 
 @Controller()
 public class AdminController {
-	//private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
+	// private static final Logger logger =
+	// LoggerFactory.getLogger(AdminController.class);
 	@Autowired()
 	private UsuarioService usuarioService;
-	
+
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
-	public String listar( Model model ) {
-		
+	public String listar(Model model) {
+		model.addAttribute("usuarios", this.usuarioService.getAll());
 		return "admin/index";
 	}
-	
+
 	@RequestMapping(value = "/admin/crear", method = RequestMethod.GET)
-	public String irCrear( Model model ) {
+	public String irCrear(Model model) {
 		model.addAttribute("usuario", new Usuario());
 		return "admin/form";
 	}
-	
+
 	@RequestMapping(value = "/admin/modificar/{idUsuario}", method = RequestMethod.GET)
-	public String irModificar(@PathVariable() int idUsuario,  Model model ) {
-		model.addAttribute("usuario", this.usuarioService.getById(idUsuario) );
-		return "admin/form";
+	public String irModificar(@PathVariable() int idUsuario, Model model) {
+		model.addAttribute("usuario", this.usuarioService.getById(idUsuario));
+		return "admin/index";
 	}
-	
+
 	@RequestMapping(value = "/admin/eliminar/{idUsuario}", method = RequestMethod.GET)
-	public String eliminar(@PathVariable() int idUsuario, Model model ) {		
+	public String eliminar(@PathVariable() int idUsuario, Model model) {
 		this.usuarioService.delete(idUsuario);
+		return "admin/index";
+	}
+
+	@RequestMapping(value = "/admin/dardealta/{idUsuario}", method = RequestMethod.GET)
+	public String darDeAlta(@PathVariable() int idUsuario, Model model) {
+		this.usuarioService.darDeAlta(idUsuario);
+		return "admin/index";
+	}
+
+	@RequestMapping(value = "/admin/dardebaja/{idUsuario}", method = RequestMethod.GET)
+	public String darDeBaja(@PathVariable() int idUsuario, Model model) {
+		this.usuarioService.darDeBaja(idUsuario);
 		return "admin/index";
 	}
 }
