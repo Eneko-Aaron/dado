@@ -1,26 +1,26 @@
 package com.ipartek.formacion.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.ipartek.formacion.domain.Usuario;
 
 public interface UsuarioService {
 	
-	ArrayList<Usuario> getAll();
+	List<Usuario> getAll();
 	
-	ArrayList<Usuario> getAllOrderByTiradas();
+	List<Usuario> getAllOrderByTiradas();
 	
-	Usuario getById( int id );
+	Usuario getById( int idUsuario );
 	
-	boolean add( Usuario u );
+	boolean add( Usuario usuario );
 	
-	boolean update( Usuario u );
+	boolean update( Usuario usuario );
 	
-	boolean delete ( int id );
+	boolean delete ( int idUsuario );
 	
-	boolean darDeAlta(int id);
+	boolean darDeAlta(int idUsuario);
 	
-	boolean darDeBaja(int id);
+	boolean darDeBaja(int idUsuario);
 	
 	int count();
 	

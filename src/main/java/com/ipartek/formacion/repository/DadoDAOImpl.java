@@ -1,6 +1,7 @@
 package com.ipartek.formacion.repository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -13,70 +14,74 @@ import com.ipartek.formacion.domain.Historial;
 import com.ipartek.formacion.repository.mapper.DadoMapper;
 import com.ipartek.formacion.repository.mapper.HistorialMapper;
 
-@Repository("dadoDAO")
+@Repository(value="dadoDAO")
 public class DadoDAOImpl implements DadoDAO {
 
 	
-	@Autowired
+	@Autowired()
 	private DataSource dataSource;	
 	private JdbcTemplate jdbctemplate;
 
-	@Autowired
-	@Override
+	@Autowired()
+	@Override()
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 		this.jdbctemplate = new JdbcTemplate(this.dataSource);
 
 	}
 	
-	@Override
-	public ArrayList<Historial> getHistorial() {
-		ArrayList<Historial> hs= (ArrayList<Historial>) this.jdbctemplate.query(
-				"SELECT u.id, u.nombre, t.fecha FROM tirada as t, usuario as u ORDER BY t.fecha;", 
+	@Override()
+	public List<Historial> getHistorial() {
+		ArrayList<Historial> historial= (ArrayList<Historial>) this.jdbctemplate.query(
+				"SELECT u.id, u.nombre, t.fecha FROM tirada as t, usuario as u WHERE u.id=t.id_usuario ORDER BY t.fecha DESC;", 
 				new HistorialMapper());
-		return hs;
+		return historial;
 	}
 
-	@Override
-	public ArrayList<Dado> getAllByUserId(int idUsuario) {
-		ArrayList<Dado> ds= (ArrayList<Dado>) this.jdbctemplate.query(
-				"SELECT `id`, `id_usuario`, `fecha` FROM `tirada` WHERE `id_usuario`= ?", 
+	@Override()
+	public List<Dado> getAllByUserId(int idUsuario) {
+		ArrayList<Dado> dados= (ArrayList<Dado>) this.jdbctemplate.query(
+				"SELECT `id`, `id_usuario`, `fecha` FROM `tirada` WHERE `id_usuario`= ? ORDER BY fecha DESC", 
 				new Object[]{idUsuario},
 				new DadoMapper());
-		return ds;
+		return dados;
 	}
 	
-	@Override
-	public ArrayList<Dado> getLastByUserId(int idUsuario) {
-			ArrayList<Dado> ds= (ArrayList<Dado>) this.jdbctemplate.query(
-					"SELECT `id`, `id_usuario`, `fecha` FROM `tirada` WHERE `id_usuario`= ? LIMIT 1;", 
+	@Override()
+	public List<Dado> getLastByUserId(int idUsuario) {
+			ArrayList<Dado> dados= (ArrayList<Dado>) this.jdbctemplate.query(
+					"SELECT `id`, `id_usuario`, `fecha` FROM `tirada` WHERE `id_usuario`= ? ORDER BY fecha DESC LIMIT 1;", 
 					new Object[]{idUsuario},
 					new DadoMapper());
-			return ds;
+			return dados;
 	}
 
-	@Override
+	@Override()
 	public boolean addTirada(int idUsuario) {
+		boolean insertado= false;
 		int lineasInsertadas= 0;
 		lineasInsertadas= this.jdbctemplate.update(
 				"INSERT INTO `tirada` (`id_usuario` ) values ( ? );", idUsuario);
-		return (lineasInsertadas!=0)? true: false;
+		if (lineasInsertadas!=0) {
+			insertado= true;
+		}
+		return insertado;
 	}
 
-	@Override
+	@Override()
 	public int countAll() {
-		int	c=this.jdbctemplate.queryForInt(
+		int	contador=this.jdbctemplate.queryForInt(
 				"SELECT COUNT(`id`) as 'total' FROM `tirada`");
 		
-	return c;
+	return contador;
 	}
 
-	@Override
+	@Override()
 	public int countById(int idUsuario) {
-		int	c=this.jdbctemplate.queryForInt(
-				"SELECT COUNT(`id_usuario`) as 'total' FROM `usuario`",idUsuario);
+		int	contador=this.jdbctemplate.queryForInt(
+				"SELECT COUNT(`id_usuario`) as 'total' FROM `tirada` WHERE `id_usuario`= ?", idUsuario);
 		
-	return c;
+	return contador;
 	}
 
 	

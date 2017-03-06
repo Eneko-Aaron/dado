@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -19,118 +20,118 @@ import com.ipartek.formacion.domain.Usuario;
 import com.ipartek.formacion.repository.mapper.UsuarioConTiradasMapper;
 import com.ipartek.formacion.repository.mapper.UsuarioMapper;
 
-@Repository("usuarioDAO")
+@Repository(value="usuarioDAO")
 public class UsuarioDAOImpl implements UsuarioDAO {
 
-	@Autowired
+	@Autowired()
 	private DataSource dataSource;	
 	private JdbcTemplate jdbctemplate;
 
-	@Autowired
-	@Override
+	@Autowired()
+	@Override()
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 		this.jdbctemplate = new JdbcTemplate(this.dataSource);
 
 	}
 
-	@Override
-	public ArrayList<Usuario> getAll() {
-		ArrayList<Usuario> us= (ArrayList<Usuario>) this.jdbctemplate.query(
-				"SELECT `id`, `nombre` FROM usuario ORDER BY `id` DESC;", 
+	@Override()
+	public List<Usuario> getAll() {
+		ArrayList<Usuario> usuarios= (ArrayList<Usuario>) this.jdbctemplate.query(
+				"SELECT `id`, `nombre` FROM usuario WHERE `fecha_baja` IS NOT NULL ORDER BY `id` DESC;", 
 				new UsuarioMapper());
-		return us;
+		return usuarios;
 	}
 
-	@Override
-	public ArrayList<Usuario> getAllOrderByTiradas() {
-		ArrayList<Usuario> us= (ArrayList<Usuario>) this.jdbctemplate.query(
-				"SELECT u.id, u.nombre , count(u.id) as total FROM usuario as u, tirada as t WHERE u.id = t.id_usuario GROUP BY u.id ORDER BY total DESC;",
+	@Override()
+	public List<Usuario> getAllOrderByTiradas() {
+		ArrayList<Usuario> usuarios= (ArrayList<Usuario>) this.jdbctemplate.query(
+				"SELECT u.id, u.nombre , count(u.id) as total FROM usuario as u, tirada as t WHERE u.id = t.id_usuario AND `fecha_baja` IS NOT NULL GROUP BY u.id ORDER BY total DESC;",
 				new UsuarioConTiradasMapper());
-		return us;
+		return usuarios;
 	}
 
-	@Override
-	public Usuario getById(int id) {
-		Usuario u = this.jdbctemplate.queryForObject(
+	@Override()
+	public Usuario getById(int idUsuario) {
+		Usuario usuario = this.jdbctemplate.queryForObject(
 				"SELECT `id`, `nombre` FROM usuario WHERE `id`= ?",
-				new Object[]{id}, 
+				new Object[]{idUsuario}, 
 				new UsuarioMapper());
-		return u;
+		return usuario;
 	}
 
-	@Override
-	public boolean add(final Usuario u) {
+	@Override()
+	public boolean add(final Usuario usuario) {
 		boolean insertado = false;
 		int lineasInsertadas= 0;
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		lineasInsertadas= this.jdbctemplate.update(
 		    new PreparedStatementCreator() {		    	
 		        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-		            PreparedStatement ps = connection.prepareStatement("INSERT INTO `usuario` (`nombre`) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
-		            ps.setString(1, u.getNombre());
-		            return ps;
+		            PreparedStatement prepared = connection.prepareStatement("INSERT INTO `usuario` (`nombre`) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
+		            prepared.setString(1, usuario.getNombre());
+		            return prepared;
 		        }
 		    },
 		    keyHolder);
 		if (lineasInsertadas!=0) {
 			insertado=true;
-			u.setId(keyHolder.getKey().intValue());
+			usuario.setId(keyHolder.getKey().intValue());
 		}
 		
 		return insertado;
 	}
 
-	@Override
-	public boolean update(Usuario u) {
+	@Override()
+	public boolean update(Usuario usuario) {
 		boolean modificado = false;
 		int lineasModificadas = 0;
-			lineasModificadas = this.jdbctemplate.update("UPDATE `usuario` SET `nombre`= ?", u.getNombre());
+			lineasModificadas = this.jdbctemplate.update("UPDATE `usuario` SET `nombre`= ?", usuario.getNombre());
 			if (lineasModificadas != 0) {
 				modificado = true;
 			}
 		return modificado;
 	}
 
-	@Override
-	public boolean delete(int id) {
+	@Override()
+	public boolean delete(int idUsuario) {
 		boolean borrado = false;
 		int lineasBorradas = 0;
-		lineasBorradas = this.jdbctemplate.update("DELETE FROM `usuario` WHERE `id`= ? ;", id);
+		lineasBorradas = this.jdbctemplate.update("DELETE FROM `usuario` WHERE `id`= ? ;", idUsuario);
 		if (lineasBorradas!=0) {
 			borrado= true;
 		}
 		return borrado;
 	}
 
-	@Override
+	@Override()
 	public int count() {
-		int	c=this.jdbctemplate.queryForInt(
+		int	contador=this.jdbctemplate.queryForInt(
 					"SELECT COUNT(`id`) as 'total' FROM `usuario`");
 			
-		return c;
+		return contador;
 	}
 
-	@Override
-	public boolean darDeAlta(int id) {
+	@Override()
+	public boolean darDeAlta(int idUsuario) {
 		boolean modificado = false;
 		int lineasModificadas = 0;
 			lineasModificadas = this.jdbctemplate.update(
 					"UPDATE `usuario` SET `fecha_alta`= CURRENT_TIMESTAMP, `fecha_baja`=NULL WHERE `id`= ? ;",
-					id);
+					idUsuario);
 			if (lineasModificadas != 0) {
 				modificado = true;
 			}
 		return modificado;
 	}
 
-	@Override
-	public boolean darDeBaja(int id) {
+	@Override()
+	public boolean darDeBaja(int idUsuario) {
 		boolean modificado = false;
 		int lineasModificadas = 0;
 			lineasModificadas = this.jdbctemplate.update(
-					"UPDATE `usuario` SET `fecha_baja`= CURRENT_TIMESTAMP, `fecha_alta`=NULL WHERE `id`= ? ;",
-					id);
+					"UPDATE `usuario` SET `fecha_baja`= CURRENT_TIMESTAMP WHERE `id`= ? ;",
+					idUsuario);
 			if (lineasModificadas != 0) {
 				modificado = true;
 			}

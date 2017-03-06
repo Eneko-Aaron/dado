@@ -1,6 +1,6 @@
 package com.ipartek.formacion.repository;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -10,21 +10,21 @@ public interface UsuarioDAO {
 	
 	void setDataSource(DataSource dataSource);
 	
-	ArrayList<Usuario> getAll();
+	List<Usuario> getAll();
 	
-	ArrayList<Usuario> getAllOrderByTiradas();
+	List<Usuario> getAllOrderByTiradas();
 	
-	Usuario getById( int id );
+	Usuario getById( int idUsuario );
 	
-	boolean add( Usuario u );
+	boolean add( Usuario usuario );
 	
-	boolean update( Usuario u );
+	boolean update( Usuario usuario );
 	
-	boolean delete ( int id );
+	boolean delete ( int idUsuario );
 	
 	int count();
 	
-	boolean darDeAlta(int id);
+	boolean darDeAlta(int idUsuario);
 	
-	boolean darDeBaja(int id);
+	boolean darDeBaja(int idUsuario);
 }

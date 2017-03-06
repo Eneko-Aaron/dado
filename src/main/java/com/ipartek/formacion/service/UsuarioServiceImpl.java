@@ -1,6 +1,7 @@
 package com.ipartek.formacion.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,61 +10,62 @@ import com.ipartek.formacion.domain.Usuario;
 import com.ipartek.formacion.repository.DadoDAO;
 import com.ipartek.formacion.repository.UsuarioDAO;
 
-@Service("usuarioService")
+@Service(value="usuarioService")
 public class UsuarioServiceImpl implements UsuarioService {
 	
-	@Autowired private UsuarioDAO usuarioDAO;
-	@Autowired private DadoDAO dadoDAO;
+	@Autowired() 
+	private UsuarioDAO usuarioDAO;
+	@Autowired() 
+	private DadoDAO dadoDAO;
 
-	@Override
-	public ArrayList<Usuario> getAll() {		
-		return usuarioDAO.getAll();
+	@Override()
+	public List<Usuario> getAll() {		
+		return this.usuarioDAO.getAll();
 	}
 
-	@Override
-	public ArrayList<Usuario> getAllOrderByTiradas() {
-		ArrayList<Usuario> us= usuarioDAO.getAllOrderByTiradas();
-		for (Usuario u : us) {
-			u.setTiradas(dadoDAO.getLastByUserId(u.getId()));
-			u.setNumTiradas(dadoDAO.countById(u.getId()));
+	@Override()
+	public List<Usuario> getAllOrderByTiradas() {
+		ArrayList<Usuario> usuarios= (ArrayList<Usuario>) this.usuarioDAO.getAllOrderByTiradas();
+		for (Usuario u : usuarios) {
+			u.setTiradas(this.dadoDAO.getLastByUserId(u.getId()));
+			u.setNumTiradas(this.dadoDAO.countById(u.getId()));
 		}
-		return us;
+		return usuarios;
 	}
 
-	@Override
-	public Usuario getById(int id) {
-		Usuario u = usuarioDAO.getById(id);
-		return u;
+	@Override()
+	public Usuario getById(int idUsuario) {	
+		return this.usuarioDAO.getById(idUsuario);
 	}
 
-	@Override
-	public boolean add(Usuario u) {
-		return usuarioDAO.add(u);
+	@Override()
+	public boolean add(Usuario usuario) {
+		return this.usuarioDAO.add(usuario);
 	}
 
-	@Override
-	public boolean update(Usuario u) {
-		return usuarioDAO.update(u);
+	@Override()
+	public boolean update(Usuario usuario) {
+		return this.usuarioDAO.update(usuario);
 	}
 
-	@Override
-	public boolean delete(int id) {
-		return usuarioDAO.delete(id);
+	@Override()
+	public boolean delete(int idUsuario) {
+		return this.usuarioDAO.delete(idUsuario);
 	}
 
-	@Override
-	public boolean darDeAlta(int id) {
-		return usuarioDAO.darDeAlta(id);
+	@Override()
+	public boolean darDeAlta(int idUsuario) {
+		return this.usuarioDAO.darDeAlta(idUsuario);
 	}
 
-	@Override
-	public boolean darDeBaja(int id) {
-		return usuarioDAO.darDeBaja(id);
+	@Override()
+	public boolean darDeBaja(int idUsuario) {
+		return this.usuarioDAO.darDeBaja(idUsuario);
 	}
 
-	@Override
+	@Override()
 	public int count() {
-		return usuarioDAO.count();
+		return this.usuarioDAO.count();
 	}
 
 }

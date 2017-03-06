@@ -9,13 +9,13 @@ import com.ipartek.formacion.domain.Usuario;
 
 public class UsuarioConTiradasMapper implements RowMapper<Usuario> {
 
-	@Override
-	public Usuario mapRow(ResultSet rs, int rowNum) throws SQLException {
-		Usuario u = new Usuario();
-		u.setNumTiradas(rs.getInt("total"));
-		u.setId(rs.getInt("id"));
-		u.setNombre(rs.getString("nombre"));
-		return u;
+	@Override()
+	public Usuario mapRow(ResultSet resulSet, int rowNum) throws SQLException {
+		Usuario usuario = new Usuario();
+		usuario.setNumTiradas(resulSet.getInt("total"));
+		usuario.setId(resulSet.getInt("id"));
+		usuario.setNombre(resulSet.getString("nombre"));
+		return usuario;
 	}
 
 }

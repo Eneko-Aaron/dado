@@ -1,6 +1,6 @@
 package com.ipartek.formacion.repository;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -11,11 +11,11 @@ public interface DadoDAO {
 	
 	void setDataSource(DataSource dataSource);
 	
-	ArrayList<Historial> getHistorial();
+	List<Historial> getHistorial();
 	
-	ArrayList<Dado> getAllByUserId(int idUsuario);
+	List<Dado> getAllByUserId(int idUsuario);
 	
-	ArrayList<Dado> getLastByUserId(int idUsuario);
+	List<Dado> getLastByUserId(int idUsuario);
 	
 	boolean addTirada( int idUsuario);
 	

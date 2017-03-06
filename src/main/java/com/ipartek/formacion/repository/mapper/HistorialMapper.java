@@ -10,15 +10,17 @@ import com.ipartek.formacion.domain.Usuario;
 
 public class HistorialMapper implements RowMapper<Historial> {
 
-	@Override
-	public Historial mapRow(ResultSet rs, int rowNum) throws SQLException {
-		Historial h = new Historial();
-		Usuario u = new  Usuario();
-		u.setNombre(rs.getString("nombre"));
-		u.setId(rs.getInt("id"));
-		h.setU(u);
-		h.setFecha(rs.getTimestamp("fecha"));
-		return h;
+	@Override()
+	public Historial mapRow(ResultSet resulSet, int rowNum) throws SQLException {
+		Historial historial = new Historial();
+		Usuario usuario = new  Usuario();
+		
+		usuario.setNombre(resulSet.getString("nombre"));
+		usuario.setId(resulSet.getInt("id"));
+		
+		historial.setU(usuario);
+		historial.setFecha(resulSet.getTimestamp("fecha"));
+		return historial;
 	}
 
 }

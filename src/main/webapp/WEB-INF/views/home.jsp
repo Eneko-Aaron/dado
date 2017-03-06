@@ -19,6 +19,7 @@
 <p>${usuario}</p>
 <p>${historial}</p>
 <p>${ranking}</p>
+<p>${usuarios}</p>
 
 </body>
 </html>

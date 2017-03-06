@@ -1,40 +1,40 @@
 package com.ipartek.formacion.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Usuario {
-	private int id;
+	private int idUsuario;
 	private String nombre;
 	
 	private Date fechaAlta;
 	private	Date fechaBaja;
 	private Date fechaModificacion;
 	
-	private ArrayList<Dado> tiradas;
+	private List<Dado> tiradas;
 	private int numTiradas;
 	
 	//constructor
 	public Usuario() {
 		super();
-		this.id= -1;
+		this.idUsuario= -1;
 		this.nombre= "";
 		
 	}
 
 	//getter & setter
 	public int getId() {
-		return id;
+		return this.idUsuario;
 	}
 
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 
 	public String getNombre() {
-		return nombre;
+		return this.nombre;
 	}
 
 
@@ -43,7 +43,7 @@ public class Usuario {
 	}
 
 	public Date getFechaAlta() {
-		return fechaAlta;
+		return this.fechaAlta;
 	}
 
 	public void setFechaAlta(Date fechaAlta) {
@@ -51,7 +51,7 @@ public class Usuario {
 	}
 
 	public Date getFechaBaja() {
-		return fechaBaja;
+		return this.fechaBaja;
 	}
 
 	public void setFechaBaja(Date fechaBaja) {
@@ -59,23 +59,23 @@ public class Usuario {
 	}
 
 	public Date getFechaModificacion() {
-		return fechaModificacion;
+		return this.fechaModificacion;
 	}
 
 	public void setFechaModificacion(Date fechaModificacion) {
 		this.fechaModificacion = fechaModificacion;
 	}
 
-	public ArrayList<Dado> getTiradas() {
-		return tiradas;
+	public List<Dado> getTiradas() {
+		return this.tiradas;
 	}
 
-	public void setTiradas(ArrayList<Dado> tiradas) {
+	public void setTiradas(List<Dado> tiradas) {
 		this.tiradas = tiradas;
 	}
 
 	public int getNumTiradas() {
-		return numTiradas;
+		return this.numTiradas;
 	}
 
 	public void setNumTiradas(int numTiradas) {
@@ -83,10 +83,10 @@ public class Usuario {
 	}
 	
 	//toString
-	@Override
+	@Override()
 	public String toString() {
-		return "Usuario [id=" + id + ", nombre=" + nombre + ", fecha_alta=" + fechaAlta + ", fecha_baja=" + fechaBaja
-				+ ", fecha_modificacion=" + fechaModificacion + ", tiradas=" + tiradas + ", numTiradas=" + numTiradas
+		return "Usuario [id=" + this.idUsuario + ", nombre=" + this.nombre + ", fecha_alta=" + this.fechaAlta + ", fecha_baja=" + this.fechaBaja
+				+ ", fecha_modificacion=" + this.fechaModificacion + ", tiradas=" + this.tiradas + ", numTiradas=" + this.numTiradas
 				+ "]";
 	}
 
