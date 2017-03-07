@@ -46,9 +46,7 @@
 	</div>
 	<br> <br>
 	<div id="estadisticas">
-	<div id="tituloestadisticas">
 	<h1>Estadisticas</h1>
-	</div>
 		<a href="estadisticas"><img id="grafico" src="resources/img/stats.png"></a>
 	</div>
 </div>

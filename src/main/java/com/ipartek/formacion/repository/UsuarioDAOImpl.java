@@ -46,7 +46,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	@Override()
 	public List<Usuario> getAllOrderByTiradas() {
 		ArrayList<Usuario> usuarios = (ArrayList<Usuario>) this.jdbctemplate.query(
-				"SELECT u.id, u.nombre , count(u.id) as total FROM usuario as u, tirada as t WHERE u.id = t.id_usuario AND `fecha_baja` IS NULL GROUP BY u.id ORDER BY total DESC;",
+				"SELECT u.id, u.nombre , count(u.id) as total FROM usuario as u, tirada as t WHERE u.id = t.id_usuario AND `fecha_baja` IS NULL GROUP BY u.id ORDER BY total DESC LIMIT 3;",
 				new UsuarioConTiradasMapper());
 		return usuarios;
 	}

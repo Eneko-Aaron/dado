@@ -24,9 +24,7 @@
 					</td>
 					<td>
 						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalmodificar_${u.id}">Modificar</button>
-						<br>
 						<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modaleliminar_${u.id}">Eliminar</button>
-						<br>	
 						<c:if test="${u.fechaBaja == null}">
 							<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalbaja_${u.id}">Dar de Baja</button>
 						</c:if> 
