@@ -17,9 +17,10 @@
 	<h2>El Afortunado en leer es ${usuario.nombre}</h2>
 </c:if>
 <p>${usuario}</p>
+<h1>historial</h1>
 <p>${historial}</p>
+<h1>ranking</h1>
 <p>${ranking}</p>
-<p>${usuarios}</p>
 
 </body>
 </html>
