@@ -22,12 +22,17 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public List<Usuario> getAll() {		
 		return this.usuarioDAO.getAll();
 	}
+	
+	@Override
+	public List<Usuario> getAllAlta() {
+		return this.usuarioDAO.getAllAlta();
+	}
 
 	@Override()
 	public List<Usuario> getAllOrderByTiradas() {
 		ArrayList<Usuario> usuarios= (ArrayList<Usuario>) this.usuarioDAO.getAllOrderByTiradas();
 		for (Usuario u : usuarios) {
-			u.setTiradas(this.dadoDAO.getLastByUserId(u.getId()));
+			u.setTiradas(this.dadoDAO.getAllByUserId(u.getId()));
 			u.setNumTiradas(this.dadoDAO.countById(u.getId()));
 		}
 		return usuarios;
@@ -67,5 +72,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public int count() {
 		return this.usuarioDAO.count();
 	}
+
+	@Override
+	public int countAlta() {
+		return this.usuarioDAO.countAlta();
+	}
+
+	
 
 }

@@ -8,6 +8,8 @@ public interface UsuarioService {
 	
 	List<Usuario> getAll();
 	
+	List<Usuario> getAllAlta();
+	
 	List<Usuario> getAllOrderByTiradas();
 	
 	Usuario getById( int idUsuario );
@@ -23,6 +25,8 @@ public interface UsuarioService {
 	boolean darDeBaja(int idUsuario);
 	
 	int count();
+	
+	int countAlta();
 	
 	
 

@@ -42,6 +42,14 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 				new UsuarioMapper());
 		return usuarios;
 	}
+	
+	@Override
+	public List<Usuario> getAllAlta() {
+		ArrayList<Usuario> usuarios = (ArrayList<Usuario>) this.jdbctemplate.query(
+				"SELECT `id`,  `nombre`, `fecha_alta`, `fecha_baja`, `fecha_modificacion` FROM usuario WHERE `fecha_baja` IS NULL ORDER BY `id` DESC;",
+				new UsuarioMapper());
+		return usuarios;
+	}
 
 	@Override()
 	public List<Usuario> getAllOrderByTiradas() {
@@ -53,7 +61,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	@Override()
 	public Usuario getById(int idUsuario) {
-		Usuario usuario = this.jdbctemplate.queryForObject("SELECT `id`, `nombre`, `fecha_alta`, `fecha_baja`, `fecha_modificacion` FROM usuario WHERE `id`= ?",
+		Usuario usuario = this.jdbctemplate.queryForObject("SELECT `id`, `nombre`, `fecha_alta`, `fecha_baja`, `fecha_modificacion` FROM `usuario` WHERE `id`= ?",
 				new Object[] { idUsuario }, new UsuarioMapper());
 		return usuario;
 	}
@@ -132,5 +140,14 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		}
 		return modificado;
 	}
+
+	@Override
+	public int countAlta() {
+		int contador = this.jdbctemplate.queryForInt("SELECT COUNT(`id`) as 'total' FROM `usuario` WHERE `fecha_baja` IS NULL");
+
+		return contador;
+	}
+
+	
 
 }

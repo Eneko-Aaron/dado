@@ -1,6 +1,4 @@
-
-
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
  <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
  <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
 	
@@ -14,7 +12,7 @@
 		    "sProcessing":     "Procesando...",
 		    "sLengthMenu":     "Mostrar _MENU_ registros",
 		    "sZeroRecords":    "No se encontraron resultados",
-		    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+		    "sEmptyTable":     "NingÃºn dato disponible en esta tabla",
 		    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
 		    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
 		    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
@@ -25,7 +23,7 @@
 		    "sLoadingRecords": "Cargando...",
 		    "oPaginate": {
 		        "sFirst":    "Primero",
-		        "sLast":     "Último",
+		        "sLast":     "Ãšltimo",
 		        "sNext":     "Siguiente",
 		        "sPrevious": "Anterior"
 		    },

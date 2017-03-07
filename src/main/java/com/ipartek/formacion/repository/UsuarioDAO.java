@@ -12,6 +12,8 @@ public interface UsuarioDAO {
 	
 	List<Usuario> getAll();
 	
+	List<Usuario> getAllAlta();
+	
 	List<Usuario> getAllOrderByTiradas();
 	
 	Usuario getById( int idUsuario );
@@ -23,6 +25,8 @@ public interface UsuarioDAO {
 	boolean delete ( int idUsuario );
 	
 	int count();
+	
+	int countAlta();
 	
 	boolean darDeAlta(int idUsuario);
 	

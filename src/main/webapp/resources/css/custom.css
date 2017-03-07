@@ -5,20 +5,24 @@
 }
 
 #contenedor {
-	width: 70%;
+	width: 90%;
 	margin-left: auto;
 	margin-right: auto;
-	padding: 0px;
 }
 
-#dado {
-	button-color: red;
+#dado{
+	position:relative;
+	float:left;
+}
+
+#alerta{
+	position:relative;
+	float:left;
 }
 
 #ranking {
+	position:relative;
 	float: right;
-	top: 50%;
-	left: 10%;
 }
 
 #imgranking {
@@ -27,19 +31,22 @@
 }
 
 #estadisticas {
-	position: relative;
-	left: 700px;
+	position:absolute;
+    bottom:40px;
+    right:80px;
 	
 }
 
-#estadisticas {
-	position: relative;
-	left: 700px;
-	
-}
 
 #grafico {
 	width: 200px;
 	height: 200px;
 }
 
+.th.table{
+	vertical-align:text-top
+}
+
+.td.table{
+	vertical-align:text-top
+}

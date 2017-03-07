@@ -1,5 +1,7 @@
 package com.ipartek.formacion.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,14 +30,16 @@ public class DadoController {
 
 	@RequestMapping(value = "/lanzar", method = RequestMethod.GET)
 	public String dado(Model model) {
-
 		Dado dado = new Dado();
 		Usuario usuario = new Usuario();
-
-		dado.lanzar(this.usuarioService.count());
-		this.dadoService.addTirada(dado.getNumero());
-		usuario = this.usuarioService.getById(dado.getNumero());
-
+		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+		
+		dado.lanzar(this.usuarioService.countAlta());
+		usuarios = (ArrayList<Usuario>) this.usuarioService.getAllAlta();
+		usuario = usuarios.get(dado.getNumero() -1);
+		
+		this.dadoService.addTirada(usuario.getId());
+		
 		model.addAttribute("usuario", usuario);
 		model.addAttribute("ranking", this.usuarioService.getAllOrderByTiradas());
 		model.addAttribute("historial", this.dadoService.getHistorial());

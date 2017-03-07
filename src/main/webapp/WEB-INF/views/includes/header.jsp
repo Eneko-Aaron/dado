@@ -17,6 +17,12 @@
 	<link href="resources/css/custom.css" rel="stylesheet">
 </head>
 <body>
-	
-
+<nav class="navbar navbar-inverse">
+   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="">Dado</a></li>
+        <li><a href="estadisticas">Estadisticas</a></li>
+      </ul>
+    </div>
+</nav>
  
